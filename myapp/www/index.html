@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then remove the CSS include above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+
+  <body ng-controller='MainCtrl'>
+    <!--Side Menu-->
+    <ion-side-menus>
+      <!-- Left menu -->
+      <ion-side-menu side="left">
+        <ion-header-bar align-title="left" class="bar-positive">
+          <h1 class="title">Types of Doctors</h1>
+        </ion-header-bar>
+        
+        <ion-content has-header="true" has-tabs="true" on-refresh="#">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="searchText">
+          </label>
+          <ion-list>
+            <ion-item ng-repeat="doctorProfile in doctorProfiles | filter:searchText"  >
+               {{doctorProfile.speciality}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+    </ion-side-menu>
+
+  <ion-side-menu-content>
+      <div class="col">
+         <div class="bar bar-header bar-calm">
+         <button class="button icon ion-navicon" menu-toggle="left"></button>
+           <h1 class="title">Dokter</h1>
+          <!-- <button class="button icon ion-navicon " menu-toggle="right"></button> --> 
+          <button class="button button-icon ion-more" ng-click="popover.show($event)">
+        </button>
+          </div>
+
+           <ion-header-bar class="bar bar-subheader item-input-inset " >
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input id="searchKey" type="search" placeholder="Search"  autocorrect="off" ng-click="ShowModalD()">
+            
+        </label>
+        
+        </ion-header-bar> 
+       </div>
+       
+    <ion-content  class="has-header">
+      <div class="list card" ng-repeat="doctorProfile in doctorProfiles" >
+        <div class="item item-avatar">
+          <img src="img/dermatologist.jpg">
+          <h2>{{doctorProfile.name}}</h2>
+          <p>{{doctorProfile.speciality}}</p>
+        </div>
+
+        <div class="item item-body">
+          <!-- <img class="full-image" src="img/banner.jpg"> -->
+          
+          <p>
+            <a href="#" class="subdued"><i class="icon ion-android-pin"></i>{{doctorProfile.city}}</a>
+            <a href="#" class="subdued"><i class="icon ion-briefcase"></i>{{doctorProfile.experince}} yrs exp</a>
+            <a href="#" class="subdued"><i class="icon ion-cash"> </i> {{doctorProfile.fees}}</a>
+          </p> 
+          <p>
+            <a href="#" class="subdued"><i class="icon ion-university"></i>{{doctorProfile.qualification}}</a>
+          </p>
+        </div>
+
+         <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" ng-click="openModal()">
+          <i class="icon ion-ios-book"></i>
+          View
+          </a>
+          <a class="tab-item" ng-click="ShowModalB()" >
+            <i class="icon ion-chatbox"></i>
+            Review
+          </a>
+          <a class="tab-item"  href="tel:01282253199" >
+            <i class="icon ion-android-call"></i>
+           Call Now
+          </a>
+        </div>
+      </div>  
+
+      </ion-content>
+    <!--Pop Over -->
+
+    <script id="templates/popover.html" type="text/ng-template">
+      <ion-popover-view>
+        <ion-content>
+          <div class="list">
+            <a class="item">
+              About Us
+            </a>
+            <a class="item">
+              Rate Us
+            </a>
+            <a class="item">
+              Share Now
+            </a>
+            <a class="item">
+              Are You a Doctor 
+            </a>
+            <a class="item">
+              Business With Us 
+            </a>
+           </div>
+        </ion-content>
+      </ion-popover-view>
+    </script>
+
+<!-- View Modal -->
+    <script id="view-model.html" type="text/ng-template">
+      <div class="modal">
+        <ion-tabs class="tabs-icon-top tabs-calm">
+          <ion-tab title="Profile" icon-on=" ion-monitor" icon-off="ion-ios7-filing-outline">
+          <div class="bar bar-header bar-calm">
+            <h1 class="title">Profile</h1>
+            <a class="button button-icon icon ion-close-circled" ng-click="closeModal()"></a>
+          </div>
+              <ion-content class="has-header">
+
+                <div class="list card">
+
+                    <div class="item item-avatar">
+                      <img src="img/dermatologist.jpg">
+                      <h2>Dr. Poonam Verma</h2>
+                      <p>BDS, MDS - Orthodonics & DenoFacial </p>
+                      <p>Dentist</p>
+
+                    </div>
+
+                     <a class="item item-icon" href="#">
+                      <i class="icon ion-medkit"></i>
+                      13 Years Experince
+                    </a>
+
+                    <a class="item item-icon-left" href="#">
+                      <i class="icon ion-university"></i>
+                      MBBS, BDS, MS, MDS
+                    </a>
+
+                    <a class="item item-icon-left" href="#">
+                      <i class="icon ion-card"></i>
+                      400 Consultation fees
+                    </a>
+
+                    <a class="item " href="#">
+                      <i class="icon ion-ios-list"></i>
+                      Services
+                      <p><i class="icon ion-android-done"> </i> Braces</p>
+                      <p><i class="icon ion-android-done"> </i> Orthodonics</p>
+                      <p><i class="icon ion-android-done"> </i> Orthodontic Alignment</p>
+                      <p><i class="icon ion-android-done"> </i> Braces</p>
+                      <p><i class="icon ion-android-done"> </i> Orthodonics</p>
+                      <p><i class="icon ion-android-done"> </i> Orthodontic Alignment</p>
+                    </a>
+
+                    <a class="item " href="#">
+                      <i class="icon ion-clock"></i>
+                      Timings
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Monday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Tuesday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Wednesday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Thursday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Friday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-balanced"><i class="icon ion-android-done"> </i> Saturday :- Open 24 Hours</button></p>
+                      <p> <button class="button button-clear button-assertive"><i class="icon ion-android-done"> </i> Sunday :- Close</button></p>
+                    </a>
+                </div>
+              </ion-content>  
+            </ion-tab>
+          <ion-tab title="Location" icon-on="ion-ios-location" icon-off="ion-ios7-clock-outline" >
+
+            
+            <ion-content>
+              <!--Insert Google Map Here-->
+            </ion-content>
+
+          </ion-tab>
+        </ion-tabs>
+   
+</div>
+
+</script>
+
+<!-- Review Modal -->
+<script id="review.html" type="text/ng-template">
+      <div class="modal">
+      
+        <div class="bar bar-header bar-calm">
+            <h1 class="title">Reviews And Ratings</h1>
+            <a class="button button-icon icon ion-close-circled" ng-click="CloseModalB()"></a>
+          </div>
+        
+    <ion-content class="has-header">
+        <div class="list card">
+          <div class="item item-avatar">
+           <img src="img/dermatologist.jpg">
+           <h2>Dr. Poonam Verma</h2>
+            
+            <p><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i> <i> | </i><i> 496 Ratings</i></p>
+          </div>
+        </div>
+
+        <center><button class="button button-block button-balanced" ng-click="ShowModalC()">Rate This</button></center>
+
+        <div class="list card">
+          <div class="item item-avatar">
+            <img src="img/verma.jpg">
+            <h2>Marty McFly</h2>
+            <p>93****12</p>
+            <p><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i> <i> | </i><i> 6th August 2015</i></p>
+          </div>
+
+          <div class="item item-body">
+            <p>
+              This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+              the content is from a card-body consisting of an image and paragraph text. The footer
+              consists of tabs, icons aligned left, within the card-footer.
+            </p>
+          </div>
+         </div> 
+         <div class="list card">
+          <div class="item item-avatar">
+            <img src="img/verma.jpg">
+            <h2>Marty McFly</h2>
+            <p>93****12</p>
+            <p><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i> <i> | </i><i> 6th August 2015</i></p>
+          </div>
+
+          <div class="item item-body">
+            <p>
+              This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+              the content is from a card-body consisting of an image and paragraph text. The footer
+              consists of tabs, icons aligned left, within the card-footer.
+            </p>
+          </div>
+         </div>
+
+         <div class="list card">
+          <div class="item item-avatar">
+            <img src="img/verma.jpg">
+            <h2>Marty McFly</h2>
+            <p>93****12</p>
+            <p><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i><i class="icon ion-ios-star"></i> <i> | </i><i> 6th August 2015</i></p>
+          </div>
+
+          <div class="item item-body">
+            <p>
+              This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+              the content is from a card-body consisting of an image and paragraph text. The footer
+              consists of tabs, icons aligned left, within the card-footer.
+            </p>
+          </div>
+         </div>
+
+    </ion-content> 
+
+      </div>
+</script>
+
+ <!--Rate this Modal -->
+<script id="ratethis.html" type="text/ng-template">
+      <div class="modal">
+      <div class="bar bar-header bar-calm">
+        <h1 class="title">Rate This</h1>
+        <a class="button button-icon icon ion-close-circled" ng-click="CloseModalC()"></a>
+      </div>
+      <ion-content class="has-header" style="background:gainsboro">
+        <div class="col" style="background:white">
+          <center><h4>Dr. Poonam Verma</h4></center>
+          <center><p button-clear button-stable>Sohna Road, Jaipur</p></center>
+        </div>
+        <div class="col">
+          <div class="list">
+               <a class="item " >
+                Overall Rating
+                <span class="item-note">
+                  196
+                </span>
+              </a>
+              <a class="item " >
+                <h3>
+                <i style="font-size: xx-large;" class="icon ion-android-star-outline"></i>
+                <i style="font-size: xx-large;" class="icon ion-android-star-outline"></i>
+                <i style="font-size: xx-large;" class="icon ion-android-star-outline"></i>
+                <i style="font-size: xx-large;" class="icon ion-android-star-outline"></i>
+                <i style="font-size: xx-large;" class="icon ion-android-star-outline"></i>
+
+                </h3>
+                
+              </a>
+            <div>
+          <div class="list" style="background:white;">
+            <label class="item item-input">
+              <textarea placeholder="Your Experince"></textarea>
+            </label>
+            <label class="item item-input">
+              <input type="text" placeholder="Your Name">
+            </label>
+          
+          <label class="item item-input">
+            <input type="number" placeholder="Phone Number">
+          </label> 
+          <label class="item item-input">
+            <input type="email" placeholder="Email ID">
+          </label> 
+          <button class="button button-block button-positive">
+            Submit
+          </button>
+</div> 
+        </div>
+      </ion-content>
+      </div>
+</script>
+
+<!-- Search Modal -->
+<script id="search.html" type="text/ng-template">
+  <div class="modal">
+      <div class="list list-inset">
+  <label class="item item-input">
+    <i class="icon ion-ios-location placeholder-icon"></i>
+    <input type="text" placeholder="City">
+  </label>
+  <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" placeholder="Speciality, Service, Name">
+
+  </label>
+</div>
+
+  </div>
+</script>
+
+
+ </ion-side-menu-content>
+   <!-- Right menu -->
+  <!-- <ion-side-menu side="right">
+    <div class="col" style="margin-top:30px">
+      <div class="bar bar-header bar-positive">
+        <h1 class="title">List of Doctors</h1>
+      </div>
+
+    </div>
+    <ion-content class="has-header">
+        <ion-list>
+      <ion-item>
+          <div class="item item-avatar" style="border: 1px solid white">
+          <img src="img/dermatologist.jpg">
+          <h2>Venkman</h2>
+          <p>Scientist</p>
+        </div>
+          <ion-option-button class="button-positive" ng-click="openModal()">View</ion-option-button>
+          <ion-option-button class="button-assertive" ng-click="ShowModalB()">Review</ion-option-button>
+      </ion-item>
+
+    </ion-list>
+    
+    </ion-content>
+
+      
+  </ion-side-menu>
+ -->
+</ion-side-menus>
+  </body>
+</html>
